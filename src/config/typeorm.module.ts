@@ -1,31 +1,32 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-
+import { CONNECTION_NAME } from "src/const/const";
 @Module({
     imports: [
         TypeOrmModule.forRoot({
-            type: "mariadb",
-            name: "toodle1",
-            host: process.env.DB_HOST,
-            port: Number(process.env.DB_PORT),
-            username: process.env.DB_USERNAME,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_DATABASE,
+            type: "postgres",
+            name: CONNECTION_NAME,
+            host: process.env.POSTGRES_HOST,
+            port: Number(process.env.POSTGRES_PORT),
+            username: process.env.POSTGRES_USER,
+            password: process.env.POSTGRES_PASSWORD,
+            database: process.env.POSTGRES_DB,
             synchronize: true,
             logging: true,
+            migrationsRun: false,
             entities: [
-                "/src/entity/**/*.ts"
+                'dist/entity/*.{ts,js}'
             ],
             migrations: [
-                "/src/migration/**/*.ts"
+                "dist/migration/*.{ts,js}"
             ],
             subscribers: [
-                "/src/subscriber/**/*.ts"
+                "dist/subscriber/*.{ts,js}"
             ],
             cli: {
-                "entitiesDir": "/src/entity",
-                "migrationsDir": "/src/migration",
-                "subscribersDir": "./src/subscriber"
+                "entitiesDir": "src/entity",
+                "migrationsDir": "src/migration",
+                "subscribersDir": "src/subscriber"
             }
         })
     ]

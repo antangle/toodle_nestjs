@@ -1,28 +1,35 @@
 import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn} from 'typeorm/index';
 
-@Entity()
+@Entity("user")
 export class User {
 
     @PrimaryGeneratedColumn()
     id?: number;
 
-    @Column()
+    @Column({
+        unique: true
+    })
     username!: string;
 
-    @Column()
-    email?: string;
+    @Column({
+        unique: true
+    })
+    email!: string;
 
-    @Column()
+    @Column({
+        type: 'varchar',
+        length: 288
+    })
     password!: string;
 
     @Column()
     nickname!: string;
 
     @CreateDateColumn()
-    created_at!: Date;
+    created_at?: Date;
 
     @UpdateDateColumn()
-    updated_at!: Date;
+    updated_at?: Date;
 
     @Column({
         nullable: true
@@ -34,6 +41,8 @@ export class User {
     })
     end_of_day?: string;
 
-    @Column({default: true})
-    terms_and_agreement: number = 0;
+    @Column({
+        default: 0
+    })
+    terms_and_agreement?: number;
 }
