@@ -1,4 +1,4 @@
-import { AuthModule } from 'src/common/auth/auth.module';
+import { AuthModule } from 'src/auth/auth.module';
 import { Module } from '@nestjs/common';
 import { MyConfigModule } from './config/envConfig.module';
 import { UserModule } from './user/user.module';

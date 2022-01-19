@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { InsertResult, QueryResult, Repository } from "typeorm";
-import { User } from "src/entity/User";
+import { User } from "src/entity/User.entity";
 import { CONNECTION_NAME } from "src/const/const";
 
 @Injectable()
@@ -22,20 +22,20 @@ export class UserService{
         return result;
     }
 
-    async create(user: User): Promise<User> {
+    async create(user: User): Promise<any> {
         const result: InsertResult = await this.repository.createQueryBuilder()
             .insert()
             .into(User)
             .values(user)
-            .returning('*')
+            .returning("id")
             .execute();
         return {
-            ...result.raw,
+            ...result.raw
         }
     }
 
     async updateUser(user: User): Promise<any> {
-        return this.repository.createQueryBuilder()
+        const result = await this.repository.createQueryBuilder()
             .update(User)
             .set({
                 nickname: user.nickname
@@ -44,7 +44,8 @@ export class UserService{
                 username: user.username
             })
             .returning(["id", "email"])
-            .execute()
+            .execute();
+        return result.raw[0];
     }
 
     async deleteUser(username: string): Promise<any> {

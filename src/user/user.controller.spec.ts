@@ -1,11 +1,12 @@
+import { UserService } from './user.service';
 import { Controller } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { User } from "src/entity/User";
+import { User } from "src/entity/User.entity";
 import { Repository } from "typeorm";
 import { UserController } from "./user.controller"
-import { UserService } from "../provider/user.service";
 import { CONNECTION_NAME } from "src/const/const";
+
 const mockRepository = () => ({
     find: jest.fn(),
     findOne: jest.fn(),

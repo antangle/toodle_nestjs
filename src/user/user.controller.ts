@@ -1,6 +1,7 @@
+import { UserService } from './user.service';
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch, Post, Query, Req, UseGuards } from "@nestjs/common";
-import { User } from "src/entity/User";
-import { UserService } from "../provider/user.service";
+import { AuthGuard } from "@nestjs/passport";
+import { User } from "src/entity/User.entity";
 
 @Controller('user')
 export class UserController{
@@ -15,7 +16,7 @@ export class UserController{
         return password
     }
 
-
+    @UseGuards(AuthGuard('jwt'))
     @Patch()
     async updateUser(@Body('data') user: User): Promise<User> {
         const result = await this.service.updateUser(user);
@@ -23,7 +24,7 @@ export class UserController{
         return result;
         
     }
-
+    @UseGuards(AuthGuard('jwt'))
     @Delete()
     async deleteUser(@Body('data') user: User): Promise<any> {
         const result = await this.service.deleteUser(user.username);

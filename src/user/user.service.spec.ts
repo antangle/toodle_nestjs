@@ -1,11 +1,11 @@
 import { Test } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { User } from "src/entity/User";
+import { User } from "src/entity/User.entity";
 import { Repository } from "typeorm";
 import { UserService } from "./user.service";
 import { CONNECTION_NAME } from "src/const/const";
-// typeorm의 repository와 혼동될 수 있기에 함수형태로 mockRepository 작성
 
+// typeorm의 repository와 혼동될 수 있기에 함수형태로 mockRepository 작성
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 
 const mockRepository = () => ({

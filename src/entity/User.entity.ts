@@ -1,6 +1,7 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn} from 'typeorm/index';
+import { Auth } from './Auth.entity';
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn} from 'typeorm/index';
 
-@Entity("user")
+@Entity('user')
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -14,7 +15,7 @@ export class User {
     @Column({
         unique: true
     })
-    email!: string;
+    email?: string;
 
     @Column({
         type: 'varchar',
@@ -23,7 +24,7 @@ export class User {
     password!: string;
 
     @Column()
-    nickname!: string;
+    nickname?: string;
 
     @CreateDateColumn()
     created_at?: Date;
@@ -45,4 +46,9 @@ export class User {
         default: 0
     })
     terms_and_agreement?: number;
+
+    @OneToOne(() => Auth)
+    @JoinColumn()
+    auth?: Auth;
+
 }
